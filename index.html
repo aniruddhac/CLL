@@ -49,7 +49,8 @@
             function onLinkClick(){
                 var pdfObj = document.getElementById("pdfObj");
                 var pdfToOpen = event.srcElement.id;
-                pdfObj.data = pdfToOpen;
+                // pdfObj.data = pdfToOpen; // for object
+                pdfObj.src = pdfToOpen; // for iframe
             }
         </script>
     </head>
@@ -92,8 +93,13 @@
                         <!-- Content to be updated here synamically -->
                     </table>
                 </td>
+                <!--
                 <td><object id="pdfObj" type="application/pdf" data="Dr Lal PathLabs Report CBC and other.pdf" width="800" height="670"></object></td>
+                -->
+                <td><iframe id="pdfObj" src="Dr Lal PathLabs Report CBC and other.pdf" frameborder="0" width="800" height="670"></iframe></td>
             </tr>
         </table>
+
+
     </body>
 </html>
