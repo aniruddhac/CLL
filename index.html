@@ -7,26 +7,76 @@
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
         <script>
+            function onBodyLoad(){
+                var data = 
+                [
+                    { "date":"13/04/2023", "diagnosticTest":"CBC, Glucode, Thyroid Profile, Lipid Profile, HbA1c, Liver & Kidney Panel, Vitamin D 25 & B12", "hospital":"Dr. Lal PathLabs", "location":"Kolkata", "report":"Dr Lal PathLabs Report CBC and other.pdf" },
+                    { "date":"13/04/2023", "diagnosticTest":"Complete Haemogram", "hospital":"Apollo Clinic", "location":"Newtown, Kolkata", "report":"Apollo Clinic Complete Haemogram Report.pdf" },
+                    { "date":"14/04/2023", "diagnosticTest":"Dr. Consultation - Dr. Soumya Mukerjee", "hospital":"Private Clinic", "location":"Laketown, Kolkata", "report":"Dr Soumya Mukherjee Prescription 1.pdf" },
+                    { "date":"15/04/2023", "diagnosticTest":"CLD Flow cytometry, LDH, Uric Acid, HBsAg, Anti HCV, HIV and COOMBS Test (Direct)", "hospital":"Drs Tribedi and Roy", "location":"Park Street, Kolkata", "report":"Drs Tribedi and Roy CLD Flow cytometry LDH Uric Acid HBsAg Anti HCV HIV and COOMBS Test Report.pdf" },
+                    { "date":"15/04/2023", "diagnosticTest":"Chest Xray, ECG and Echo", "hospital":"Suraksha Diagnostics", "location":"Saltlake, Kolkata", "report":"Suraksha Diagnostics Report Chest Xray Echo and ECG.pdf" },
+                    { "date":"17/04/2023", "diagnosticTest":"USG (Whole Abdomen)", "hospital":"Suraksha Diagnostics", "location":"Saltlake, Kolkata", "report":"Suraksha Diagnostics Report USG.pdf" },
+                    { "date":"19/04/2023", "diagnosticTest":"Dr. Consultation - Dr. Soumya Mukerjee", "hospital":"NH Narayana", "location":"Howrah, Kolkata", "report":"Dr Soumya Mukherjee Prescription 2.pdf" },
+                    { "date":"20/04/2023", "diagnosticTest":"CLL Fish Panel and IGH Somatic Hypermutation Test", "hospital":"Unipath", "location":"Kolkata (done at Ahmedabad)", "report":"Unipath CLL Fish Panel and IGH Somatic Hypermutation Report.pdf" },
+                    { "date":"22/04/2023", "diagnosticTest":"Dr. Consultation - Dr. Hari Menon", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"No report" },
+                    { "date":"22/04/2023", "diagnosticTest":"Serum Lactate Dehydrogenase, B2 Microglobulin Serum and Complete CBC", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"St Johns Serum Lactate Dehydrogenase and B2 Microglobulin Serum Report.pdf" },
+                    { "date":"29/04/2023", "diagnosticTest":"CT Scan - Chest and Abdomen/Pelvis (Plain)", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"St Johns Ct Scan Abdomen and Pelvis Report.pdf" },
+                    { "date":"04/05/2023", "diagnosticTest":"Special Consultation - Dr. Hari Menon", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"No report" },
+                    { "date":"29/05/2023", "diagnosticTest":"Complete CBC and Peripheral Smear test", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"No report" },
+                    { "date":"30/05/2023", "diagnosticTest":"Special Consultation - Dr. Hari Menon", "hospital":"St John's Medical College Hospital", "location":"Bangalore", "report":"" }
+                ];
+
+                var tableBody = document.getElementById('reportTableBody');
+                data.forEach(function(object) {
+                    var tr = document.createElement('tr');
+                    if(object.report == "No report" || object.report == ""){
+                        tr.innerHTML = '<td>' + object.date + '</td>' +
+                        '<td>' + object.diagnosticTest + '</td>' +
+                        '<td>' + object.hospital + '</td>' +
+                        '<td>' + object.location + '</td>'+ 
+                        '<td> No report </td>';
+                    }
+                    else {
+                        tr.innerHTML = '<td>' + object.date + '</td>' +
+                        '<td>' + object.diagnosticTest + '</td>' +
+                        '<td>' + object.hospital + '</td>' +
+                        '<td>' + object.location + '</td>'+ 
+                        '<td><button onclick="onLinkClick()" id="' + object.report + '" class="btn btn-primary btn-sm custom" data-toggle="tooltip" data-placement="bottom" title="' + object.report + '">View Report</button></td>';
+                    }
+                    tableBody.appendChild(tr);
+                });
+            }
             function onLinkClick(){
                 var pdfObj = document.getElementById("pdfObj");
-                var pdfToOpen = event.srcElement.innerHTML;
+                var pdfToOpen = event.srcElement.id;
                 pdfObj.data = pdfToOpen;
             }
         </script>
     </head>
-    <body class="small">
+    <body class="small" onload="onBodyLoad()">
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+        <script>
+            $(document).ready(function () {
+                $('#dtVerticalScrollExample').DataTable({
+                    "scrollY": "200px",
+                    "scrollCollapse": true,
+                });
+                $('.dataTables_length').addClass('bs-select');
+                alert('hello');
+            });
+        </script>
+
         <p class="h6 text-center">Aniruddha Chakrabarti - CLL Diagnostic Tests and Reports</p>
 
         <table class="table">
             <tr>
                 <td>
-                    <table id="dtVerticalScrollExample" class="table table-striped table-hover table-bordered table-sm">
+                    <table id="reportTable" class="table table-striped table-hover table-bordered table-sm">
                         <thead>
                             <tr class="table-primary">
                                 <th scope="col" class="align-top">Date</th>
@@ -36,106 +86,10 @@
                                 <th scope="col" class="align-top">Report</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>13/04/2023</td>
-                                <td>CBC and Other</td>
-                                <td>Dr. Lal PathLabs</td>
-                                <td>Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Dr Lal PathLabs Report CBC and other.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>13/04/2023</td>
-                                <td>Complete Haemogram</td>
-                                <td>Apollo Clinic</td>
-                                <td>Newtown, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Apollo Clinic Complete Haemogram Report.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>14/04/2023</td>
-                                <td>Dr. Consultation - Dr. Soumya Mukerjee</td>
-                                <td>Private Clinic</td>
-                                <td>Laketown, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Dr Soumya Mukherjee Prescription 1.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>15/04/2023</td>
-                                <td>CLD Flow cytometry, LDH, Uric Acid, HBsAg, Anti HCV, HIV and COOMBS Test (Direct)</td>
-                                <td>Drs Tribedi and Roy</td>
-                                <td>Park Street, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Drs Tribedi and Roy CLD Flow cytometry LDH Uric Acid HBsAg Anti HCV HIV and COOMBS Test Report.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>15/04/2023</td>
-                                <td>Chest Xray, ECG and Echo</td>
-                                <td>Suraksha Diagnostics</td>
-                                <td>Saltlake, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Suraksha Diagnostics Report Chest Xray Echo and ECG.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>17/04/2023</td>
-                                <td>USG (Whole Abdomen)</td>
-                                <td>Suraksha Diagnostics</td>
-                                <td>Saltlake, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Suraksha Diagnostics Report USG.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>19/04/2023</td>
-                                <td>Dr. Consultation - Dr. Soumya Mukerjee</td>
-                                <td>NH Narayana</td>
-                                <td>Howrah, Kolkata</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Dr Soumya Mukherjee Prescription 2.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>20/04/2023</td>
-                                <td>CLL Fish Panel and IGH Somatic Hypermutation Test</td>
-                                <td>Unipath</td>
-                                <td>Kolkata (done at Ahmedabad)</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">Unipath CLL Fish Panel and IGH Somatic Hypermutation Report.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>22/04/2023</td>
-                                <td>Dr. Consultation - Dr. Hari Menon</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td>No report</td>
-                            </tr>
-                            <tr>
-                                <td>22/04/2023</td>
-                                <td>Serum Lactate Dehydrogenase, B2 Microglobulin Serum and Complete CBC</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">St Johns Serum Lactate Dehydrogenase and B2 Microglobulin Serum Report.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>29/04/2023</td>
-                                <td>CT Scan - Chest and Abdomen/Pelvis (Plain)</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td><button onclick="onLinkClick()" class="btn btn-primary btn-sm">St Johns Ct Scan Abdomen and Pelvis Report.pdf</button></td>
-                            </tr>
-                            <tr>
-                                <td>04/05/2023</td>
-                                <td>Special Consultation - Dr. Hari Menon</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td>No report</td>
-                            </tr>
-                            <tr>
-                                <td>29/05/2023</td>
-                                <td>Complete CBC and Smear test</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td>Not available</td>
-                            </tr>
-                            <tr>
-                                <td>30/05/2023</td>
-                                <td>Dr. Consultation - Dr. Hari Menon</td>
-                                <td>St John's Medical College Hospital</td>
-                                <td>Bangalore</td>
-                                <td>No report</td>
-                            </tr>
+                        <tbody id="reportTableBody">
+                            
                         </tbody>
+                        <!-- Content to be updated here synamically -->
                     </table>
                 </td>
                 <td><object id="pdfObj" data="Dr Lal PathLabs Report CBC and other.pdf" width="800" height="670"></object></td>
